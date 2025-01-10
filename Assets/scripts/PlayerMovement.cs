@@ -18,7 +18,9 @@ public class PlayerMovement : MonoBehaviour
     public float gravity => (-2f * maxJumpHeight) / Mathf.Pow((maxJumpTime / 2f), 2);
 
     public bool grounded {  get; private set; } 
-    public bool jumping { get; private set; } 
+    public bool jumping { get; private set; }
+    public bool running => Mathf.Abs(velocity.x) > 0.25f || Mathf.Abs(inputAxis) > 0.25f;
+    public bool sliding => (inputAxis > 0f && velocity.x < 0f) || (inputAxis < 0f && velocity.x > 0f);
 
     private void Awake()
     {
