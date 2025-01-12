@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class EntitiMovement : MonoBehaviour
+[RequireComponent(typeof(Rigidbody2D))]
+public class EntityMovement : MonoBehaviour
 {
     public float speed = 1f;
     public Vector2 direction = Vector2.left;
 
-    private new Rigidbody2D rigidbody;
+    private Rigidbody2D rb;
     private Vector2 velocity;
 
     private void Awake()
     {
-        rigidbody = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
         enabled = false;
     }
 
@@ -29,13 +30,13 @@ public class EntitiMovement : MonoBehaviour
 
     private void OnEnable()
     {
-        rigidbody.WakeUp();
+        rb.WakeUp();
     }
 
     private void OnDisable()
     {
-        rigidbody.velocity = Vector2.zero;
-        rigidbody.Sleep();
+        rb.velocity = Vector2.zero;
+        rb.Sleep();
     }
 
     private void FixedUpdate()
@@ -43,14 +44,14 @@ public class EntitiMovement : MonoBehaviour
         velocity.x = direction.x * speed;
         velocity.y += Physics2D.gravity.y * Time.fixedDeltaTime;
 
-        rigidbody.MovePosition(rigidbody.position + velocity * Time.fixedDeltaTime);
+        rb.MovePosition(rb.position + velocity * Time.fixedDeltaTime);
 
-        if (rigidbody.Raycast(direction))
+        if (rb.Raycast(direction))
         {
             direction = -direction;
         }
 
-        if (rigidbody.Raycast(Vector2.down))
+        if (rb.Raycast(Vector2.down))
         {
             velocity.y = Mathf.Max(velocity.y, 0f);
         }

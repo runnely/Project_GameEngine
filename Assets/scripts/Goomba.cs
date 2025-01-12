@@ -4,15 +4,25 @@ using UnityEngine;
 
 public class Goomba : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public Sprite flatSprite;
+
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            if (collision.transform.DotTest(transform, Vector2.down))
+            {
+                Flatten();
+            }
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Flatten()
     {
-        
+        GetComponent<Collider2D>().enabled = false;
+        GetComponent<EntityMovement>().enabled = false;
+        GetComponent<AnimatedSprite>().enabled = false;
+        GetComponent<SpriteRenderer>().sprite = flatSprite;
+        Destroy(gameObject, 0.5f);
     }
 }
