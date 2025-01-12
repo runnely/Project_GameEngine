@@ -1,10 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+
+    public int world { get; private set; } = 1;
+    public int stage { get; private set; } = 1;
+    public int lives { get; private set; } = 3;
 
     private void Awake()
     {
@@ -24,5 +29,22 @@ public class GameManager : MonoBehaviour
         {
             Instance = null;
         }
+    }
+    private void Start()
+    {
+        NewGame();
+    }
+    public void NewGame()
+    {
+        lives = 3;
+
+        LoadLevel(1, 1);
+    }
+    public void LoadLevel(int world, int stage)
+    {
+        this.world = world;
+        this.stage = stage;
+
+        SceneManager.LoadScene($"{world}-{stage}");
     }
 }
