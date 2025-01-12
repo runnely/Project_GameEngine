@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BlockHit : MonoBehaviour
 {
+    public GameObject item;
     public Sprite emptyBlock;
     public int maxHits = -1;
 
@@ -21,6 +22,7 @@ public class BlockHit : MonoBehaviour
     private void Hit()
     {
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.enabled = true;
 
         maxHits--;
 
@@ -28,6 +30,11 @@ public class BlockHit : MonoBehaviour
         {
             spriteRenderer.sprite = emptyBlock;
         }
+
+        if (item != null) {
+            Instantiate(item, transform.position, Quaternion.identity);
+        }
+
 
         StartCoroutine(Animate());
     }

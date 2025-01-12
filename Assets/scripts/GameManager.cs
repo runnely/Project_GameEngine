@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public int world { get; private set; } = 1;
     public int stage { get; private set; } = 1;
     public int lives { get; private set; } = 3;
+    public int coins { get; private set; }
 
     private void Awake()
     {
@@ -37,6 +38,7 @@ public class GameManager : MonoBehaviour
     public void NewGame()
     {
         lives = 3;
+        coins = 0;
 
         LoadLevel(1, 1);
     }
@@ -71,5 +73,20 @@ public class GameManager : MonoBehaviour
         {
             GameOver();
         }
+    }
+    public void AddCoin()
+    {
+        coins++;
+
+        if (coins == 100)
+        {
+            AddLife();
+            coins = 0;
+        }
+    }
+
+    public void AddLife()
+    {
+        lives++;
     }
 }
